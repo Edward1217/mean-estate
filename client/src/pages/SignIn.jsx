@@ -1,11 +1,16 @@
 import { useState } from 'react';
-import { Link,useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { signInStart, signInSuccess,signInFailure } from '../redux/user/userSlice';
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from '../redux/user/userSlice';
 import OAuth from '../components/OAuth';
+
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const {loading,error} = useSelector((state) => state.user);
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleChange = (e) => {
@@ -14,6 +19,7 @@ export default function SignIn() {
       [e.target.id]: e.target.value,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -26,14 +32,14 @@ export default function SignIn() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      console.log(data);
+      console.log('API Response:', data);
       if (data.success === false) {
         dispatch(signInFailure(data.message));
         return;
       }
       dispatch(signInSuccess(data));
+      console.log('Navigation to home page');
       navigate('/');
-      
     } catch (error) {
       dispatch(signInFailure(error.message));
     }
@@ -66,7 +72,7 @@ export default function SignIn() {
         <OAuth/>
       </form>
       <div className='flex gap-2 mt-5'>
-        <p>Don't you have an account?</p>
+        <p>Dont have an account?</p>
         <Link to={'/sign-up'}>
           <span className='text-blue-700'>Sign up</span>
         </Link>
@@ -75,4 +81,3 @@ export default function SignIn() {
     </div>
   );
 }
-
