@@ -110,20 +110,7 @@ export default function Profile() {
       dispatch(signOutUserFailure(error.message));
     }
   }
-  // const handleShowListings = async () => {
-  //   try{
-  //     setShowListingsError(false);
-  //     const res = await fetch(`/api/user/listing/${currentUser._id}`)
-  //     const data = await res.json();
-  //     if (data.success === false) {
-  //       setShowListingsError(true);
-  //       return
-  //     } 
-  //     setUserListings(data);
-  //   } catch(error) {
-  //     setShowListingsError(true);
-  //   }
-  // }
+  
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
@@ -137,6 +124,37 @@ export default function Profile() {
       setUserListings(data);
     } catch (error) {
       setShowListingsError(true);
+    }
+  };
+
+  // const handleListingDelete = async (listingId) =>{
+  //   try{
+  //     res = await fetch(`/api/listing/delete/${listingId}`,{
+  //       method:'DELETE',
+
+  //     })
+  //     setUserListings((prev)=>prev.filter((listing)=> listing.id !== listingId));
+  //   } catch(error) {
+  //     console.log(error.message);
+       
+  //   }
+  // }
+  const handleListingDelete = async (listingId) => {
+    try {
+      const res = await fetch(`/api/listing/delete/${listingId}`, {
+        method: 'DELETE',
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        console.log(data.message);
+        return;
+      }
+
+      setUserListings((prev) =>
+        prev.filter((listing) => listing._id !== listingId)
+      );
+    } catch (error) {
+      console.log(error.message);
     }
   };
   return (
@@ -215,7 +233,7 @@ export default function Profile() {
                   <p >{listing.name}</p>
                 </Link>
                 <div className='flex flex-col item-center'> 
-                  <button className='text-red-700 uppercase'>Delete</button>
+                  <button onClick={()=>handleListingDelete(listing._id)} className='text-red-700 uppercase'>Delete</button>
                   <button className='text-green-700 uppercase'>edit</button>
                 </div>
               </div>
