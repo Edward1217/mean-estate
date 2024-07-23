@@ -63,9 +63,6 @@ import cookieParser from 'cookie-parser';
 import path from 'path';
 dotenv.config();
 
-import common from './common.js'; // Ensure the correct path and file extension
-
-console.log(common.example);
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
