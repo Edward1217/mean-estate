@@ -61,9 +61,10 @@ import authRouter from './routes/auth.route.js';
 import listingRouter from './routes/listing.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
-import common from './common'; // For ES Modules
+import common from './common';
 dotenv.config();
 
+console.log(common.example);
 mongoose
   .connect(process.env.MONGO)
   .then(() => {
