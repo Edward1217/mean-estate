@@ -61,8 +61,9 @@ import authRouter from './routes/auth.route.js';
 import listingRouter from './routes/listing.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
-import common from './common';
 dotenv.config();
+
+import common from './common.js'; // Ensure the correct path and file extension
 
 console.log(common.example);
 mongoose
